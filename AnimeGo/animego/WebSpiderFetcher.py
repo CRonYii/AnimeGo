@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import urllib.request as ws
 import urllib
 import re,os,sys

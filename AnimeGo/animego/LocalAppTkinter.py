@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from tkinter import *
 from tkinter.tix import *
 import urllib.request as ws

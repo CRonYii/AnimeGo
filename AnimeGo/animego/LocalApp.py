@@ -20,7 +20,7 @@ class MainWindow(wx.Frame):
         self.Bind(wx.EVT_MENU,self.onExit,menuExit)
         self.Bind(wx.EVT_BUTTON,self.onSearch,btnSearch)
         
-        self.control = wx.TextCtrl(self)
+        #self.control = wx.TextCtrl(self)
         self.Show(True)
         
     def onSearch(self,e):

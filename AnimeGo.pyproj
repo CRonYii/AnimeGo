@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{15cbf510-228d-4b9d-bc98-2da93ab561b3}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>AnimeGo\animego\__init__.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>{47e316b4-7392-4922-b5bb-45c4083cdd7b}</InterpreterId>
+    <InterpreterVersion>3.5</InterpreterVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+    <PtvsTargetsFile>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets</PtvsTargetsFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="AnimeGo\animego\LocalApp.py" />
+    <Compile Include="AnimeGo\animego\LocalAppTkinter.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="AnimeGo\animego\WebSpiderFetcher.py" />
+    <Compile Include="AnimeGo\animego\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="AnimeGo\" />
+    <Folder Include="AnimeGo\animego" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="{47e316b4-7392-4922-b5bb-45c4083cdd7b}\3.5" />
+    <InterpreterReference Include="{9d9eb4c7-1bd2-4f3d-b24f-cee08a06f0f8}\3.5" />
+  </ItemGroup>
+  <Import Project="$(PtvsTargetsFile)" Condition="Exists($(PtvsTargetsFile))" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" Condition="!Exists($(PtvsTargetsFile))" />
+</Project>

@@ -1,2 +1,4 @@
-if __name__ == '__main__':
-    
+import LocalAppTkinter
+
+print('Running AnimeGo main')
+LocalAppTkinter.start();

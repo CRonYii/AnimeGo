@@ -15,7 +15,7 @@ def acess(keyword="",page=1):
      - return -
 
     '''
-    print('searching keyword: \'%s\' at page [%s]'%(keyword, page))
+    #print('searching keyword: \'%s\' at page [%s]'%(keyword, page))
     url = home_url+'/page/%s?term=%s'%(page,urllib.parse.quote(keyword))
     request = ws.Request(url)
     response = ws.urlopen(request)

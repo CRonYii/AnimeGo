@@ -2,9 +2,10 @@
 
 from tkinter import *
 from tkinter.tix import *
-import urllib.request as ws
-import WebSpiderFetcher as wpf
 
+import WebSpiderFetcher as wpf
+import urllib.request as ws
+import _thread
 
 class App:
 
@@ -80,7 +81,7 @@ class App:
         currentPage = self.page.get()
         if currentPage < self.totalPages:
             self.page.set(self.page.get()+1)
-            self.search()
+            _thread.start_new_thread(self.search, ())
         else:
             self.setStatusText('Page Number out of Range Page: %s/%s' %(self.page.get(),self.totalPages))
 
@@ -88,19 +89,19 @@ class App:
         currentPage = self.page.get()
         if currentPage > 1:
             self.page.set(self.page.get()-1)
-            self.search()
+            _thread.start_new_thread(self.search, ())
         else:
             self.setStatusText('Page Number out of Range Page: %s/%s' %(self.page.get(),self.totalPages))
 
     def eventOnSearch(self,*event):
         self.page.set(1)
-        self.search()
+        _thread.start_new_thread(self.search, ())
 
     def gotoPage(self,*event):
         pageNumber = int(self.gotoText.get())
         if pageNumber > 0 and pageNumber <= self.totalPages:
             self.page.set(pageNumber)
-            self.search()
+            _thread.start_new_thread(self.search, ())
         else:
             self.setStatusText('Page Number out of Range Page: %s/%s' %(self.page.get(),self.totalPages))
 
@@ -111,6 +112,8 @@ class App:
         '''
         keyword = self.keyword.get()
         page = self.page.get()
+        
+        self.setStatusText('Searching: %s at page: %s/%s' %(keyword, self.page.get(), self.totalPages))
 
         self.resultList, totalPages = wpf.acess(keyword,page)
         if totalPages != -1: self.totalPages = totalPages
@@ -120,7 +123,7 @@ class App:
             self.list.hlist.add(id, text=item)
             self.list.setstatus(id, "off")
 
-        self.setStatusText('%s results found   Page: %s/%s' %(len(self.resultList),page,self.totalPages))
+        self.setStatusText('%s results found at Page: %s/%s' %(len(self.resultList),page,self.totalPages))
 
     def downloadFile(self, name,url):
         f = ws.urlopen(url)

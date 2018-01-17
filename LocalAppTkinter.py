@@ -2,14 +2,17 @@
 
 from tkinter import *
 from tkinter.tix import *
+from tkinter import filedialog
 
 import WebSpiderFetcher as wpf
 import urllib.request as ws
 import _thread
+import os
 
 class App:
 
     def __init__(self,master):
+        self.master = master
         frame = Frame(master)
         frame.pack()
 
@@ -21,7 +24,6 @@ class App:
         self.statusText = StringVar()
         self.totalPages = int(1)
         self.resultList = []
-        self.dir = 'E:/Python/AnimeGo/Animego/torrent/'
 
         '''
         widget definition
@@ -125,13 +127,14 @@ class App:
 
         self.setStatusText('%s results found at Page: %s/%s' %(len(self.resultList),page,self.totalPages))
 
-    def downloadFile(self, name,url):
+    def downloadFile(self, name, url, path):
         f = ws.urlopen(url)
         data = f.read()
-        with open(self.dir+name+'.torrent', "wb") as code:
+        a = open(path+name+'.torrent', "wb")
+        with open(path+name+'.torrent', "wb") as code:
             code.write(data)
             code.close()
-            self.setStatusText('File: %s saved at %s'%(name,self.dir))
+            self.setStatusText('File: %s saved at %s'%(name, path))
 
     def validate(self, action, index, value_if_allowed,
                        prior_value, text, validation_type, trigger_type, widget_name):
@@ -141,10 +144,15 @@ class App:
             return False
 
     def download(self):
+        path = filedialog.askdirectory(initialdir = "./",title = "Save As") + '/'
         selection = self.list.getselection()
+        if len(selection) == 0: return
+        
         for index in selection:
-            info = self.resultList[int(index)-1]
-            self.downloadFile(info[2],info[4])
+            info = self.resultList[int(index)]
+            self.downloadFile(info[2], info[4], path) #info[2] - title, info[4] - torrent address
+
+        os.startfile(path)
 
 def start():
     root = Tk()

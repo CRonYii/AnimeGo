@@ -130,7 +130,7 @@ class App:
     def downloadFile(self, name, url, path):
         f = ws.urlopen(url)
         data = f.read()
-        a = open(path+name+'.torrent', "wb")
+        name = wpf.getCleanFileName(name)
         with open(path+name+'.torrent', "wb") as code:
             code.write(data)
             code.close()
@@ -151,6 +151,7 @@ class App:
         for index in selection:
             info = self.resultList[int(index)]
             self.downloadFile(info[2], info[4], path) #info[2] - title, info[4] - torrent address
+            self.list.setstatus(index, "off")
 
         os.startfile(path)
 
@@ -160,6 +161,3 @@ def start():
     app = App(root)
 
     root.mainloop()
-
-if __name__ == '__main__':
-    start()

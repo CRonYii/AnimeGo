@@ -3,6 +3,7 @@
 import urllib.request as ws
 import urllib
 import re,os,sys
+import html as h
 
 home_url = 'https://acg.rip'
 dir = 'E:/Python/AnimeGo/Animego/animego/torrent/'
@@ -18,8 +19,9 @@ def acess(keyword="",page=1):
     #print('searching keyword: \'%s\' at page [%s]'%(keyword, page))
     url = home_url+'/page/%s?term=%s'%(page,urllib.parse.quote(keyword))
     request = ws.Request(url)
-    response = ws.urlopen(request)
+    response = ws.urlopen(request)    
     html = str(response.read(),encoding='utf-8')
+    html = h.unescape(html)
     return analyze(html), getTotalPageNumber(html)
 
 def analyze(html):
@@ -27,11 +29,7 @@ def analyze(html):
     resources = getResources(html)
     for i,r in enumerate(resources):
         info = analyzeSingleResource(r)
-        #info.insert(0,i+1)
         itemList.append(info)
-        #print(i+1,info)
-        #downloadFile(info[2], info[4])
-        #print(i,r)
     return itemList
     
 def analyzeSingleResource(text):
@@ -72,6 +70,9 @@ def fetchFromList(o):
     else:
         o = o[0]
     return o
+
+def getCleanFileName(s):
+    return re.sub('[/\\*\":?<>|]', '', s)
 
 def getTotalPageNumber(html):
     pattern = re.compile('<a rel="next" href="(.*?)</a></li> <li class="next">', re.RegexFlag.S)
